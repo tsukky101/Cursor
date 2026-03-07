@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consor — Todo App</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1 class="title">Consor</h1>
+      <p class="subtitle">やることを、ひとつずつ。</p>
+    </header>
+
+    <form class="add-form" id="addForm">
+      <input
+        type="text"
+        class="input"
+        id="todoInput"
+        placeholder="新しいタスクを追加..."
+        autocomplete="off"
+      >
+      <button type="submit" class="btn-add" aria-label="追加">+</button>
+    </form>
+
+    <div class="filters">
+      <button type="button" class="filter active" data-filter="all">すべて</button>
+      <button type="button" class="filter" data-filter="active">未完了</button>
+      <button type="button" class="filter" data-filter="done">完了</button>
+    </div>
+
+    <p class="empty-state" id="emptyState">タスクがありません。上から追加してください。</p>
+    <ul class="todo-list" id="todoList"></ul>
+
+    <footer class="footer">
+      <span class="count" id="count">0 件のタスク</span>
+      <button type="button" class="btn-clear" id="clearDone">完了を削除</button>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
