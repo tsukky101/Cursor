@@ -3,43 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consor — Todo App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>つきにゃCursorテストページ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="app">
     <header class="header">
-      <h1 class="title">Consor</h1>
+      <div class="header-top">
+        <h1>つきにゃCursorテストページ</h1>
+        <button type="button" class="btn-theme" id="themeToggle" aria-label="テーマ切替">
+          <span class="icon-sun" aria-hidden="true">☀</span>
+          <span class="icon-moon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
       <p class="subtitle">やることを、ひとつずつ。</p>
     </header>
 
     <form class="add-form" id="addForm">
-      <input
-        type="text"
-        class="input"
-        id="todoInput"
-        placeholder="新しいタスクを追加..."
-        autocomplete="off"
-      >
-      <button type="submit" class="btn-add" aria-label="追加">+</button>
+      <div class="add-form-row">
+        <input
+          type="text"
+          id="todoInput"
+          placeholder="新しいタスクを入力..."
+          autocomplete="off"
+          maxlength="140"
+        >
+        <button type="submit" class="btn-add" aria-label="追加">追加</button>
+      </div>
+      <div class="add-form-options">
+        <label class="option-group">
+          <span class="option-label">担当者</span>
+          <input type="text" id="assigneeInput" placeholder="名前（任意）" maxlength="40" aria-label="担当者（任意）">
+        </label>
+        <label class="option-group">
+          <span class="option-label">期限</span>
+          <input type="date" id="dueDateInput" aria-label="期限（任意）">
+        </label>
+        <label class="option-group">
+          <span class="option-label">優先度</span>
+          <select id="prioritySelect" aria-label="優先度">
+            <option value="medium">普通</option>
+            <option value="high">高</option>
+            <option value="low">低</option>
+          </select>
+        </label>
+      </div>
     </form>
 
-    <div class="filters">
-      <button type="button" class="filter active" data-filter="all">すべて</button>
-      <button type="button" class="filter" data-filter="active">未完了</button>
-      <button type="button" class="filter" data-filter="done">完了</button>
+    <div class="filter-tabs" role="tablist">
+      <button type="button" class="filter-tab active" data-filter="all" role="tab">すべて</button>
+      <button type="button" class="filter-tab" data-filter="active" role="tab">未完了</button>
+      <button type="button" class="filter-tab" data-filter="completed" role="tab">完了</button>
     </div>
-
-    <p class="empty-state" id="emptyState">タスクがありません。上から追加してください。</p>
     <ul class="todo-list" id="todoList"></ul>
 
+    <details class="github-sync" id="githubSync">
+      <summary>GitHubで共有（別のPC・ブラウザで同じデータを使う）</summary>
+      <div class="github-sync-inner">
+        <p class="github-sync-hint">
+          <a href="https://github.com/settings/tokens/new?scopes=gist&description=Todo%E3%82%A2%E3%83%97%E3%83%AA" target="_blank" rel="noopener">GitHubでトークンを作成</a>（<code>gist</code> にチェック）して、下に貼り付けてください。
+        </p>
+        <div class="github-sync-fields">
+          <input type="password" id="githubToken" placeholder="Personal Access Token" autocomplete="off" class="github-input">
+          <label class="github-checkbox">
+            <input type="checkbox" id="githubSaveToken"> この端末にトークンを保存
+          </label>
+          <input type="text" id="githubGistId" placeholder="Gist ID（初回は空欄。別の端末ではここに入力）" class="github-input">
+          <span class="github-gist-link" id="githubGistLink"></span>
+        </div>
+        <div class="github-sync-buttons">
+          <button type="button" class="btn-secondary" id="githubSaveBtn">GitHubに保存</button>
+          <button type="button" class="btn-secondary" id="githubLoadBtn">GitHubから読み込み</button>
+        </div>
+      </div>
+    </details>
+
     <footer class="footer">
-      <span class="count" id="count">0 件のタスク</span>
-      <button type="button" class="btn-clear" id="clearDone">完了を削除</button>
+      <div class="footer-left">
+        <span class="count" id="count">0 件</span>
+        <div class="footer-save-actions">
+          <button type="button" class="btn-link" id="exportBtn">エクスポート</button>
+          <span class="footer-sep">|</span>
+          <label class="btn-link btn-import-label">
+            インポート
+            <input type="file" id="importInput" accept=".json" hidden>
+          </label>
+        </div>
+      </div>
+      <button type="button" class="btn-clear" id="clearCompleted">完了を削除</button>
     </footer>
+    <div class="toast" id="toast" aria-live="polite"></div>
   </div>
   <script src="app.js"></script>
 </body>
